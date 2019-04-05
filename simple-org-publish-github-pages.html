@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-04-04 Thu 19:56 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Very Short Guide to Publishing Org-Mode to Github Pages</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">A Very Short Guide to Publishing Org-Mode to Github Pages</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc4abaec">1. Create Your Github Pages Repository</a></li>
+<li><a href="#org6cfc2f9">2. Create Your Source Repository</a></li>
+<li><a href="#org75ac672">3. Add Your First Page</a></li>
+<li><a href="#org0d99874">4. Add Deployment Scripts</a></li>
+<li><a href="#org4e7e4ad">5. Export</a></li>
+<li><a href="#org4546d34">6. Deploying</a></li>
+<li><a href="#org8d3b167">7. Example</a></li>
+<li><a href="#orgcf3089f">8. Adding More Content</a></li>
+</ul>
+</div>
+</div>
+<p>
+I've found a number of guides for using org-mode to publish blogs on Github, but none that fit the bill for me exactly. The process I landed on, which I outline below;
+</p>
+
+<ul class="org-ul">
+<li>Maintains the org source-files and build-scripts in a separate repo from production</li>
+<li>Does all publishing without relying on your system's emacs configuration via Makefile and <code>emacs --quick --script</code></li>
+<li>Uses Github hosted CSS to easily prettify your pages</li>
+<li>Is very, very easy to get started with</li>
+</ul>
+
+<div id="outline-container-orgc4abaec" class="outline-2">
+<h2 id="orgc4abaec"><span class="section-number-2">1</span> Create Your Github Pages Repository</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This repo will contain your deployed HTML files. This is the content that Github will serve on your behalf at <code>your-github-username.github.io</code>.
+</p>
+
+<p>
+Follow the directions <a href="https://pages.github.com/">here</a>. It basically boils down to creating a new repo with the <i>exact</i> name <code>your-github-username.github.io</code>. Allow Github to generate a README.md.
+</p>
+
+<p>
+Once that's done, clone this to somewhere on your development machine:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-builtin">cd</span> ~/projects
+git clone https://github.com/username/username.github.io
+</pre>
+</div>
+
+<p>
+You can also use git:// or ssh:// in place of <a href="https://">https://</a> if you prefer &#x2013; it shouldn't matter, provided your SSH keys are configured.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6cfc2f9" class="outline-2">
+<h2 id="org6cfc2f9"><span class="section-number-2">2</span> Create Your Source Repository</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This repo will contain your source org files. I've seen a number of other guides which recommend creating a branch within the production repo for this, but I find that somewhat unintuitive.
+</p>
+
+<p>
+You can name it whatever you like. I call mine <code>github-blog-source</code>. Go ahead and clone it down as well.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-builtin">cd</span> ~/projects
+git clone https://github.com/username/github-blog-source
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75ac672" class="outline-2">
+<h2 id="org75ac672"><span class="section-number-2">3</span> Add Your First Page</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+In the development repo (<code>github-blog-source</code>), create a file named exactly <code>index.org</code>. This file will become <code>index.html</code> on your deployed site.
+</p>
+
+<p>
+In typical org markup, define the page title and at least one heading. Additionally, include a <code>SETUPFILE</code> header line, which embeds some CSS and JavaScript into your deployed site. It's beautiful and low effort, but as always, be wary of untrusted external dependencies. You may consider downloading the <a href="https://github.com/fniessen/org-html-themes">the code from fniessen's Github</a> and placing it directly in your source repo, to be embedded directly into the deployed site. Major thanks for fniessen for this theme, and if you're a front-end dev, he seems quite happy to have more themes contributed.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span class="org-org-document-info-keyword">#+TITLE:</span> <span class="org-org-document-title">Username's Github Pages</span>
+<span class="org-org-meta-line">#+SETUPFILE: <a href="https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup">https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup</a></span>
+
+<span class="org-org-level-1">* Some Heading</span>
+Some content.
+
+<span class="org-org-level-2">** Subheading</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0d99874" class="outline-2">
+<h2 id="org0d99874"><span class="section-number-2">4</span> Add Deployment Scripts</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+This step, as well as the next, are distilled from the <a href="https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">official org-mode HTML publishing guide</a>. I strongly recommend reading it. My deviations from this guide are extremely minor, and mostly for brevity. The only significant difference is that I place the publishing code in a standalone script, which runs independent of your system configuration.
+</p>
+
+<p>
+First, create a simple Makefile which will compile your website from org into HTML. Just save this in the root directory of <code>github-blog-source</code>, alongside <code>index.org</code>, as a plain text file named <code>Makefile</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-makefile"><span class="org-comment-delimiter"># </span><span class="org-comment">Execute publish.lisp with emacs (ignoring system config files)</span>
+
+<span class="org-makefile-targets">publish</span>:
+        emacs --quick --script publish.lisp
+</pre>
+</div>
+
+<p>
+Next, we need to create <code>publish.lisp</code>. This is where all the real work happens. For details beyond the embedded comments, please read the official documentation linked above. However, do note the following;
+</p>
+<ul class="org-ul">
+<li><code>username</code> needs to be replace with your Github username</li>
+<li>It assumes that you are running <code>make</code> from the root of your source repo.</li>
+<li>It assumes that your source and production repos are in the same directory (and that the production repo is, therefore, located at <code>../username.github.io</code>, relative to <code>github-blog-source</code>.</li>
+<li>It depends on the <code>htmlize</code> emacs package, which we do not yet have. Even if you have it installed on your machine, it will not be available in builds here, due to the <code>--quick</code> option.</li>
+<li>The <code>:base-extension</code> value in <code>org-publish-project-alist</code> defines the extensions of any static resources your site may need. Make sure that the values here are sufficient for your purposes.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;;</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">publish.lisp (Modified from https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html)</span>
+<span class="org-comment-delimiter">;;</span>
+
+(<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">htmlize is needed for code-block formatting</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">load the submodule</span>
+(load-file <span class="org-string">"./submodules/htmlize/htmlize.el"</span>)
+(<span class="org-keyword">require</span> '<span class="org-constant">htmlize</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">This is required for fniessen's readTheOrg theme</span>
+(<span class="org-keyword">setq</span> org-html-htmlize-output-type 'css)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">!!! REPLACE WITH YOUR SITE NAME !!!</span>
+(<span class="org-keyword">setq</span>
+   sourcedir <span class="org-string">"./"</span>
+   pubdir    <span class="org-string">"../username.github.io"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Don't prompt for code execution</span>
+(<span class="org-keyword">setq</span> org-confirm-babel-evaluate nil)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Define the publishing process</span>
+(<span class="org-keyword">setq</span> org-publish-project-alist
+      `(
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">org-&gt;HTML</span>
+        (<span class="org-string">"org-notes"</span>
+         <span class="org-builtin">:base-directory</span> ,sourcedir
+         <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
+         <span class="org-builtin">:publishing-directory</span> ,pubdir
+         <span class="org-builtin">:recursive</span> t
+         <span class="org-builtin">:publishing-function</span> org-html-publish-to-html
+         <span class="org-builtin">:headline-levels</span> 4
+         <span class="org-builtin">:auto-preamble</span> t)
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">resource copying</span>
+        (<span class="org-string">"org-static"</span>
+         <span class="org-builtin">:base-directory</span> ,sourcedir
+         <span class="org-builtin">:base-extension</span> <span class="org-string">"css</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">js</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">png</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">jpg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">gif</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">pdf</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">mp3</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ogg"</span>
+         <span class="org-builtin">:publishing-directory</span> ,pubdir
+         <span class="org-builtin">:recursive</span> t
+         <span class="org-builtin">:publishing-function</span> org-publish-attachment)
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">final publish command</span>
+        (<span class="org-string">"blog"</span> <span class="org-builtin">:components</span> (<span class="org-string">"org-notes"</span> <span class="org-string">"org-static"</span>))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Publish the site</span>
+(org-publish-project <span class="org-string">"blog"</span>)
+</pre>
+</div>
+
+<p>
+Finally, we will pull in htmlize as a submodule, at <code>submodules/htmlize</code>. This makes the package available to the instance of emacs spawned in our build script via the call to <code>load-file</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-builtin">cd</span> ~/projects/github-blog-source
+git submodule add https://github.com/hniksic/emacs-htmlize.git submodules/htmlize
+</pre>
+</div>
+
+<p>
+Alternatively, if you remove the <code>--quick</code> argument from your <code>Makefile</code>, and remove the <code>load-file</code> call from <code>publish.lisp</code>, you could use the version of <code>htmlize</code> installed via <code>package-install</code> in emacs. However, using a submodule permits a repeatable and consistent build environment, and avoids any conflicts that may occur due to your own org customizations. Replacing <code>--quick</code> with <code>--no-init-file</code> may be a suitable compromise, using your already installed <code>htmlize</code> without loading your <code>init.el</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4e7e4ad" class="outline-2">
+<h2 id="org4e7e4ad"><span class="section-number-2">5</span> Export</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+When the script above is executed, org files will be exported to HTML in <code>~/projects/username.github.io</code>, and any resources will be copied.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-builtin">cd</span> ~/projects/github-blog-source
+make
+</pre>
+</div>
+
+<p>
+Alternatively, if you're editing <code>index.org</code> in emacs, you can run make with <code>M-x compile RET</code>. This will open a <code>*compilation*</code> buffer, where you can tap <code>g</code> to recompile.
+</p>
+
+<p>
+If you run <code>ls ~/projects/username.github.io</code>, you should see a file called <code>index.html</code>. This is the landing page for your site. To view it locally, open <code>file:///home/computerusername/projects/username.github.io/index.html</code> in your web browser. Of course, replace <code>/home/computerusername/projects/</code> with the actual path to your project.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4546d34" class="outline-2">
+<h2 id="org4546d34"><span class="section-number-2">6</span> Deploying</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Once you're satisfied with your work, you'll need to commit and push changes in both repos.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Commit and push source</span>
+<span class="org-builtin">cd</span> ~/projects/github-blog-source
+git add publish.lisp Makefile index.org <span class="org-comment-delimiter"># </span><span class="org-comment">...submodule should already be staged</span>
+git commit <span class="org-comment-delimiter"># </span><span class="org-comment">...then enter a detailed commit message</span>
+git push origin HEAD:master
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Commit and push published HTML</span>
+<span class="org-builtin">cd</span> ~/projects/username.github.io
+git add .
+git commit <span class="org-comment-delimiter"># </span><span class="org-comment">...then enter commit message, prefarably referencing the SHA of your commit in github-blog-source</span>
+git push origin HEAD:master
+</pre>
+</div>
+
+<p>
+Within a few seconds, your site should be served by Github at <code>username.github.io</code>!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8d3b167" class="outline-2">
+<h2 id="org8d3b167"><span class="section-number-2">7</span> Example</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+For a more complete example, check out <a href="https://github.com/bgutter/github-blog-source/tree/298dce21e7b6b8196a26f12cb79218a3acc0b266">this commit</a> of my blog source, and <a href="https://github.com/bgutter/bgutter.github.io/tree/fb9a037f6c432f55544d7391a28301e03417d874">this commit</a> of my blog's HTML.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcf3089f" class="outline-2">
+<h2 id="orgcf3089f"><span class="section-number-2">8</span> Adding More Content</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Additional pages can be added as new <code>*.org</code> files, and images can be included as well. However, take care to only use relative links.
+</p>
+<ul class="org-ul">
+<li>Link to different page: <code>[[./other-page.org][other page]]</code> will become a link to <a href="http://username.github.io/other-page.html">http://username.github.io/other-page.html</a> when exported.</li>
+<li>Embedded images work similarly: <code>[[./resources/image.png]]</code> will embed said image into your page, just as in normal org-mode.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2019-04-04 Thu 19:56</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
